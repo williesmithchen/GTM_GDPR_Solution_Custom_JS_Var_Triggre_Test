@@ -10,6 +10,43 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-WGKDXC2');</script>
   <!-- End Google Tag Manager -->
+  <script>
+    var testCookieCategory = ['performance', 'analytics', 'advertising', 'social_networking', 'unclassified', 'fakedata'];
+    var random = function(min, max) { return Math.floor(Math.random() * (max - min + 1) ) + min; };
+    var poker = function poker (source, length) {
+      var temparr;
+      if (length <= source.length) {
+        temparr = source;
+      } else {
+        temparr = new Array(length);
+        for (var i = 0; i < length; i++) {
+          temparr[i] = source[i % source.length];
+        }
+      }
+
+      for (var j = 0; j < temparr.length; j++) {
+        var k = random(0, (temparr.length - 1));
+        var temp = temparr[j];
+        temparr[j] = temparr[k];
+        temparr[k] = temp;
+      }
+
+      return temparr.slice(0, length);
+    };
+
+    var randomDataArray = poker(testCookieCategory, random(0, 5));
+
+    // [!!!Point Step!!!] - Start
+    // When our snipper code is DOM ready and get end-user's assent cookie categories list,
+    // then exe dataLayer.push, push the assent cookie categories array to 'termlyAssentCookieCategories'.
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        'termlyAssentCookieCategories': randomDataArray
+        // 'termlyAssentCookieCategories': ['essential'].concat(test)
+      });
+    }
+    // [!!!Point Step!!!] - End
+  </script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -20,10 +57,19 @@
     <h1>GTM GDPR Solution Custom JS Var Triggre Test</h1>
   </header>
   <main>
-    <p>If GTM-Custom JS Var Triggre is working, then here[<b></b>] should render (Trigger) text.</p>
+    <p>If GTM-Custom JS Var Triggre is working, then here <b id="trigger-test">[None.]</b> should render (Trigger! at Time) text.</p>
+    <p>Now Test Data is <b id="test">None.</b></p>
   </main>
   <footer>
     <p>Copyright © <span id="copyright-years">2018</span> by williesmithchen. All rights reserved</p>
   </footer>
+  <script>
+    var now = new Date();
+    var copyrightElement = document.getElementById('copyright-years');
+    copyrightElement.innerHTML = now.getFullYear();
+
+    var copyrightElement = document.getElementById('test');
+    copyrightElement.innerHTML = '[' + randomDataArray.join(',') + ']';
+  </script>
 </body>
 </html>
